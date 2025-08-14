@@ -40,12 +40,13 @@ Utilizei o docker-compose para criar e subir a aplicação localmente:
 docker compose up -d
 
 ```
-[Docker Run Bia](./Assets/docker-run-bia.png)
+![Docker Run Bia](./Assets/docker-run-bia.png)
 
 Após o build, validei o acesso à aplicação via navegador na URL:
 
 http://localhost:3001
-[Teste local BIA](./Assets/teste-bia.png)
+
+![Teste local BIA](./Assets/teste-bia.png)
 
 
 Conceito:
@@ -61,7 +62,8 @@ Na AWS, criei uma instância EC2 com as seguintes especificações:
 - Tipo: t3.micro (elegível no Free Tier)
 - Região: São Paulo sa-east-1
 - Hostname: bia-dev
-[EC2 Bia-Dev](./Assets/ec2-bia-dev.png)
+
+![EC2 Bia-Dev](./Assets/ec2-bia-dev.png)
 
 Conceito:
 
@@ -76,7 +78,8 @@ Criei uma role no IAM chamada role-acesso-ssm, com a policy:
 ```bash
 AmazonSSMManagedInstanceCore
 ```
-[Role para acesso via SSM](./Assets/role-acesso-ssm.png)
+
+![Role para acesso via SSM](./Assets/role-acesso-ssm.png)
 
 
 Essa role foi anexada à instância EC2 para permitir acesso via AWS Systems Manager.
@@ -95,7 +98,7 @@ Conceito:
 - Security Groups funcionam como firewalls virtuais para controlar o tráfego de entrada e saída das instâncias.
 - Neste caso, liberar a porta 3001 é necessário para que a aplicação seja acessível externamente.
 
-[Security Group](./Assets/security-group.png)
+![Security Group](./Assets/security-group.png)
 
 
 ✅ Resultado Final
@@ -122,7 +125,7 @@ Ao final do desafio:
 
 🖥️ Instalação das Ferramentas
 
-Docker
+<a id="docker"></a>Docker
 
 Documentação Oficial: https://docs.docker.com/get-docker/
 Repositório local: https://github.com/bruno-salmito/Docker/
@@ -145,7 +148,7 @@ sudo usermod -aG docker $USER
 Obs: É necessário reiniciar a sessão.
 
 
-Git
+<a id="git"></a>Git
 
 Documentação Oficial: https://git-scm.com/downloads
 
@@ -161,7 +164,7 @@ git config --global user.name "Seu Nome"
 git config --global user.email "seuemail@exemplo.com"
 ```
 
-Amazon Q
+<a id="amazon-q"></a>Amazon Q
 
 Documentação Oficial: https://docs.aws.amazon.com/amazonq/
 Instalação no ubuntu: https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing.html#command-line-installing-ubuntu
@@ -178,14 +181,14 @@ sudo dpkg -i amazon-q.deb
 ```
 Para abrir e começar a utilizar o Amazon Q dite a letra q no console.
 
-[Amazon Q](./Assets/amazonQ.png)
+![Amazon Q](./Assets/amazonQ.png)
 
-VSCode
+<a id="vscode"></a>VSCode
 
 Site Oficial: https://code.visualstudio.com/
 
 
-DBeaver
+<a id="dbeaver"></a>DBeaver
 
 Site Oficial: https://dbeaver.io/download/
 
