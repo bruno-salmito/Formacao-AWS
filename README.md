@@ -35,4 +35,4 @@ Formacao-AWS
  ├── Desafio-01
  │    └── README.md         # Documentação completa do desafio 01
  └── Desafio-02
-      └── README.md         # Documentação completa do desafio 02 (futuro)
+      └── README.md         # Documentação completa do desafio 02

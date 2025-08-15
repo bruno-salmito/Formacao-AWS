@@ -127,8 +127,8 @@ Ao final do desafio:
 
 <a id="docker"></a>Docker
 
-Documentação Oficial: https://docs.docker.com/get-docker/
-Repositório local: https://github.com/bruno-salmito/Docker/
+Documentação Oficial: [Clique aqui](https://docs.docker.com/get-docker/)
+Repositório local: [Clique aqui](https://github.com/bruno-salmito/Docker/)
 
 Instalação no Linux (Ubuntu/Debian):
 
@@ -166,8 +166,8 @@ git config --global user.email "seuemail@exemplo.com"
 
 <a id="amazon-q"></a>Amazon Q
 
-Documentação Oficial: https://docs.aws.amazon.com/amazonq/
-Instalação no ubuntu: https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing.html#command-line-installing-ubuntu
+Documentação Oficial: [Clique aqui](https://docs.aws.amazon.com/amazonq/)
+Instalação no ubuntu: [Clique aqui](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing.html#command-line-installing-ubuntu)
 
 Fazer o download do Amazon Q command line
 ```bash

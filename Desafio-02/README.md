@@ -140,3 +140,81 @@ Conceito:
 aws ecr describe-repositories --profie formacao
 ```
 ![ECR-DESCRIBE](./Assets/ecr-describe.png)
+
+### 5️⃣ Revisão de Conceitos Importantes
+
+Durante o desafio, revisamos:
+
+- VPC: rede virtual privada onde ficam os recursos da AWS.
+- Security Group: firewall que controla o tráfego de entrada e saída.
+- Role: conjunto de permissões atribuídas a um recurso ou serviço.
+- Policy: documento JSON que define permissões específicas.
+- IAM: serviço para gerenciar usuários, grupos, roles e policies.
+
+### 6️⃣ Diferença entre Arquiteturas x86 e ARM
+
+- x86: mais comum em desktops e servidores, maior compatibilidade de software.
+- ARM: mais eficiente em consumo de energia, usado em dispositivos móveis e, cada vez mais, em servidores cloud (como instâncias Graviton na AWS).
+
+Importante entender essa diferença, pois imagens Docker precisam ser compatíveis com a arquitetura da instância onde serão executadas.
+
+### Resultado Final
+
+Ao final do desafio:
+
+- VM configurada com AWS CLI e Session Manager Plugin.
+- Conexões realizadas via SSH e SSM.
+- Imagem Docker criada localmente e publicada no ECR.
+- Conceitos de rede, segurança e arquitetura revisados.
+
+### 📚 Conceitos Abordados
+
+- AWS CLI
+- Session Manager Plugin
+- SSH
+- SSM
+- Docker
+- ECR
+- VPC
+- Security Group
+- IAM Role e Policy
+- Arquiteturas x86 e ARM
+<hr>
+
+### 🖥️ Instalação das Ferramentas
+
+<a id="aws-cli"></a>AWS CLI
+
+Documentação Oficial: [Clique aqui](https://docs.aws.amazon.com/cli/)
+Documentação Utilizada: [Clique aqui](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+**Instalação no Linux:**
+```bash
+#Baixa o pacote de instalação do aws-cli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#Descompacta o pacote de instalação
+unzip awscliv2.zip
+#Instala o aws-cli
+sudo ./aws/install
+#Verifica a versão instalada
+aws --version
+```
+
+<a id="aws-sam-cli"></a>AWS SAM Cli
+Documentação Utilizada: [Clique aqui](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+
+
+<a id="session-manager-plugin"></a>Session Manager Plugin
+
+Documentação Oficial: [Clique aqui](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+Documentação Utilizada: [Clique aqui](https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-debian-and-ubuntu.html)
+
+**Instalação no Linux:**
+```bash
+#Baixa o Pacote de instalação
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+#Instala o pacaote
+sudo dpkg -i session-manager-plugin.deb
+#Verifica a versão
+session-manager-plugin --version
+```
