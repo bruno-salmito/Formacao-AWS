@@ -18,7 +18,12 @@ Ao longo das aulas, são realizados diversos **desafios práticos** que simulam 
 Neste desafio foi feita a instalação e configuração do ambiente local com Docker, Git, Amazon Q, VSCode e DBeaver.  
 Também foi realizado o **build** e teste de uma aplicação React chamada **Bia** localmente na porta 3001, além do provisionamento de uma instância EC2 na AWS com Security Group, Role IAM e acesso via SSM.
 
+### [Desafio 02 - Preparação do ambiente e conexão com AWS via cli e publicação no ECR](Desafio-02/README.md)
+O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR.  
+
 ---
+
+
 
 *(Os próximos desafios serão adicionados conforme avançamos no curso.)*
 

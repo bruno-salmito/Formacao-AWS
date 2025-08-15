@@ -1,1 +1,142 @@
-Desafio-02
+# Desafio 02 - Conexão com a AWS via CLI, SSH e SSM + Publicação no ECR
+
+## 🎯 Objetivo
+O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR.  
+Além disso, foram revisados conceitos importantes como **VPC, Security Group, IAM Roles e Policies** e estudadas diferenças entre arquiteturas **x86** e **ARM**.
+
+---
+
+## 🛠️ Passos Executados
+
+### 1️⃣ Preparação da VM e Instalação de Dependências
+Após finalizar a configuração da minha máquina virtual, instalei as ferramentas necessárias para interagir com a AWS:
+
+- [**AWS CLI**](#aws-cli)  
+- [**Session Manager Plugin**](#session-manager-plugin)  
+
+**Conceito:**  
+- *AWS CLI* (Command Line Interface) permite gerenciar serviços AWS diretamente pelo terminal.  
+- *Session Manager Plugin* é usado para permitir conexões com instâncias via AWS Systems Manager (SSM), sem necessidade de abrir portas de rede.
+
+---
+
+### 2️⃣ Conexão com a AWS via AWS CLI
+Configurei minha conta AWS na VM para autenticação com a CLI:
+
+```bash
+aws configure --profile formacao
+    AWS Access Key ID [None]: AKIA4XD46**********
+    AWS Secret Access Key [None]: 2xue****************
+    Default region name [None]: us-east-1
+    Default output format [None]: table
+```
+Parâmetros configurados:
+
+- AWS Access Key ID
+- AWS Secret Access Key
+- Default region name
+- Default output format
+
+Conceito:
+Essa configuração cria o arquivo ~/.aws/credentials, permitindo que a CLI se autentique em qualquer comando executado.
+
+Para gerar o Access Key navegue até a console da ![AWS](https://console.aws.amazon.com/).
+- Navegue para o painel do IAM
+- Clique no usuário que foi criado
+- Clique na aba **Security credentials**
+- Em Access Keys clique em **create access key**, selecione other, next e create access key
+
+![Access-Key-IAM](./Assets/Access-key-IAM.png)
+
+### 3️⃣ Conexões por SSH e SSM
+
+Pratiquei o acesso à instância EC2 utilizando:
+
+- SSH: conexão tradicional via chave privada (.pem). Se não existir um key par é necessário criar. (Esse método de acesso embora não é recomendado se comparado ao SSM). 
+- SSM: acesso via Systems Manager, sem necessidade de abrir portas como 22 (SSH).
+
+Comandos usados:
+
+**Acesso por SSH**
+```bash
+chmod 400 minha-chave.pem
+ssh -i minha-chave.pem ec2-user@IP_PUBLICO
+```
+
+**Acesso via SSM**
+```bash
+aws ssm start-session --target i-********* --profile formacao
+```
+
+Conceito:
+
+- SSH exige abertura de porta e uso de chave privada.
+- SSM é mais seguro, pois utiliza o agente do Systems Manager e uma role IAM para autenticação, sem expor portas à internet.
+
+Prós e contras de cada um.
+
+**SSH (Secure Shell)**
+
+Prós:
+
+* *Ampla compatibilidade:* Funciona em praticamente qualquer sistema Linux ou Unix-like.
+* *Controle total:* Permite executar qualquer comando no servidor, copiar arquivos com scp ou rsync e até encaminhar portas.
+* *Desempenho:* Geralmente mais rápido que SSM para sessões interativas diretas.
+* *Independência de serviços adicionais:* Não depende de configuração de agente extra (além do daemon SSH) ou permissões IAM da AWS.
+
+Contras:
+
+* *Gerenciamento de chaves:* Precisa gerenciar manualmente pares de chaves ou senhas, o que pode ser trabalhoso e arriscado em ambientes grandes.
+* *Exposição à rede:* Normalmente requer abertura de portas (22) na VPC ou na Internet, aumentando superfície de ataque.
+* *Auditoria limitada:* Difícil rastrear quem executou o quê sem ferramentas extras (como auditd ou soluções de logging).
+* *Escalabilidade:* Em ambientes grandes, manter acessos SSH para centenas de instâncias pode ser complexo e propenso a erros.
+
+**SSM (AWS Systems Manager)**
+
+Prós:
+
+* *Sem necessidade de abrir portas:* Funciona via agente SSM sem expor a porta 22 à Internet.
+* *Controle centralizado:* Permite gerenciar acessos via IAM, sem compartilhar chaves SSH.
+* *Auditoria integrada:* Todas as sessões podem ser registradas no CloudTrail ou em logs do SSM, facilitando compliance.
+* *Automação:* Facilita execução de comandos remotos, scripts ou patches em múltiplas instâncias de forma centralizada.
+* *Conectividade híbrida:* Funciona também em instâncias on-premises conectadas ao SSM Agent, sem VPN.
+
+Contras:
+
+* *Dependência de agente:* Requer que o SSM Agent esteja instalado e atualizado nas instâncias.
+* *Limitações de interface:* Nem todos os comandos interativos funcionam tão bem quanto no SSH tradicional; algumas operações podem ser menos intuitivas.
+* *Performance:* Pode ser mais lento para sessões interativas complexas devido ao canal intermediário gerenciado pela AWS.
+* *Curva de aprendizado:* Administradores acostumados com SSH podem precisar de tempo para se familiarizar com o SSM e suas políticas IAM.
+
+Resumo prático:
+
+**SSH:** melhor para acesso direto e operações manuais, especialmente em poucas máquinas ou em testes.
+**SSM:** melhor para ambientes corporativos, seguros, auditáveis e automatizados, sem necessidade de expor portas e com gestão centralizada.
+
+### 4️⃣ Trabalho com Imagens Docker e Publicação no ECR
+
+Criei e testei imagens Docker localmente, depois publiquei no Amazon Elastic Container Registry (ECR):
+
+```bash
+#Login no ECR
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ID_AWS>.dkr.ecr.us-east-1.amazonaws.com
+
+# Build da imagem
+docker build -t bia .
+# Tag da imagem
+docker tag bia:latest <ID_AWS>.dkr.ecr.us-east-1.amazonaws.com/bia:latest
+# Push para o ECR
+docker push <ID_AWS>.dkr.ecr.us-east-1.amazonaws.com/bia:latest
+```
+Deixo um [Script](./Scripts/build.sh) que automatiza esse processo.
+
+Conceito:
+
+- ECR é um repositório gerenciado de imagens Docker na AWS.
+- O push para o ECR permite que a imagem seja utilizada em serviços como ECS, EKS ou diretamente em EC2.
+
+```bash
+#Mostra os repositórios
+aws ecr describe-repositories --profie formacao
+```
+![ECR-DESCRIBE](./Assets/ecr-describe.png)
