@@ -17,6 +17,28 @@ Após finalizar a configuração da minha máquina virtual, instalei as ferramen
 **Conceito:**  
 - *AWS CLI* (Command Line Interface) permite gerenciar serviços AWS diretamente pelo terminal.  
 - *Session Manager Plugin* é usado para permitir conexões com instâncias via AWS Systems Manager (SSM), sem necessidade de abrir portas de rede.
+- *MCP (Model Context Protocol) é um protocolo aberto padronizado que permite que aplicações forneçam contexto para LLMs (Larg Language Models).
+- *ECR* (Elastic Container Registry) é o serviço de registro de containers Docker totalmente gerenciado pela AWS.
+    * Função Principal
+        * Armazena, gerencia e implanta imagens Docker
+        * Registry privado e seguro para nossas aplicações
+    * Características
+        * **Integração nativa** com ECS, EKS e outros serviços AWS.
+        * **Segurança:** Criptografia em reposuo e em trânsito.
+        * **Controle de acesso:** Ingrado com IAM
+        * **Versionamento:** Suporte a tags de imagens
+- *ECS* (Elastic Container Service) é o serviço de orquestração de containers totalmente gerenciado.
+    * Função Principal
+        * Executa e gerencia containers Docker em escala
+        * Orquestra aplicações containerizadas
+    * Componentes Principais
+        * **Cluster:** Grupo de recursos computacionais (EC2 ou Fargate).
+        * **Task Definition:** "Receita" que define como o container deve rodar.
+        * **Task:** Instância em execução de uma task definition.
+        * **Service:** Garante que um número específico de task esteja rodando. 
+    * Tipos de launch
+        * **EC2:** Você gerencia as instâncias.
+        * **Fargate** Serverless, AWS gerencia a infraestrutura.
 
 ---
 
