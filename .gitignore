@@ -1,5 +1,5 @@
 # Ignorar pasta Scripts
-Scripts/
+Scripts/create_environment/old/
 
 # Logs gerados pelos scripts
 logs/
