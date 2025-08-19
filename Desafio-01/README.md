@@ -82,7 +82,7 @@ AmazonSSMManagedInstanceCore
 ![Role para acesso via SSM](./Assets/role-acesso-ssm.png)
 
 
-Essa role foi anexada à instância EC2 para permitir acesso via AWS Systems Manager.
+Essa role foi anexada à instância EC2 para permitir acesso via SSM (AWS Systems Manager).
 
 Conceito:
 
