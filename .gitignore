@@ -1,0 +1,32 @@
+# Ignorar pasta Scripts
+Scripts/
+
+# Logs gerados pelos scripts
+logs/
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+
+# Arquivos de configuração local (se houver)
+.env
+.env.local
+config.local.*
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos do sistema
+.directory
+desktop.ini
