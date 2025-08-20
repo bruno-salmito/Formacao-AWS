@@ -168,7 +168,7 @@ git config --global user.email "seuemail@exemplo.com"
 
 Documentação Oficial: [Clique aqui](https://docs.aws.amazon.com/amazonq/)
 Instalação no ubuntu: [Clique aqui](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing.html#command-line-installing-ubuntu)
-
+Instalação no AmazonLinux: [Clique aqui](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing-ssh-setup-autocomplete.html)
 Fazer o download do Amazon Q command line
 ```bash
 wget https://desktop-release.q.us-east-1.amazonaws.com/latest/amazon-q.deb
