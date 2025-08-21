@@ -17,7 +17,7 @@ Após finalizar a configuração da minha máquina virtual, instalei as ferramen
 **Conceito:**  
 - *AWS CLI* (Command Line Interface) permite gerenciar serviços AWS diretamente pelo terminal.  
 - *Session Manager Plugin* é usado para permitir conexões com instâncias via AWS Systems Manager (SSM), sem necessidade de abrir portas de rede.
-- *MCP (Model Context Protocol) é um protocolo aberto padronizado que permite que aplicações forneçam contexto para LLMs (Larg Language Models).
+- *MCP* (Model Context Protocol) é um protocolo aberto padronizado que permite que aplicações forneçam contexto para LLMs (Larg Language Models).
 - *ECR* (Elastic Container Registry) é o serviço de registro de containers Docker totalmente gerenciado pela AWS.
     * Função Principal
         * Armazena, gerencia e implanta imagens Docker
@@ -39,6 +39,18 @@ Após finalizar a configuração da minha máquina virtual, instalei as ferramen
     * Tipos de launch
         * **EC2:** Você gerencia as instâncias.
         * **Fargate** Serverless, AWS gerencia a infraestrutura.
+- *VPC* (Virtual Private Cloud) é um ambiente de rede virtual isolado dentro de uma nuvem pública, ela é uma rede virtual muito semelhante a uma rede tradicional, nela podemos definir
+    * Intervalo de endereços IP (CIDR ex: 10.0.0.0/16).
+    * Sub-redes (subnets).
+    * Regras de firewall (security groups, NACLs).
+    * Gateways de saída para a internet ou para outras redes (Internet Gateway, NAT Gateway, VPN, Direct Connect).
+- *Subnet* é a divisão lógica de uma VPC, consiste em um intervalo de endereços IP. Cada Sub-rede fica alocada em uma única zona de disponibilidade.
+
+<p align="center">
+    <img src="./Assets/vpc-subnet.png">
+</p>
+
+- *Security Group* é um firewall virtual que controla o tráfego de entrada (*inbound*) e saída (*outbound*) de instâncias EC2, permitindo definir regras de segurança baseadas em IP, protocolo e porta.
 
 ---
 
@@ -62,7 +74,7 @@ Parâmetros configurados:
 Conceito:
 Essa configuração cria o arquivo ~/.aws/credentials, permitindo que a CLI se autentique em qualquer comando executado.
 
-Para gerar o Access Key navegue até a console da ![AWS](https://console.aws.amazon.com/).
+Para gerar o Access Key navegue até a console da [AWS](https://console.aws.amazon.com/).
 - Navegue para o painel do IAM
 - Clique no usuário que foi criado
 - Clique na aba **Security credentials**
@@ -240,3 +252,10 @@ sudo dpkg -i session-manager-plugin.deb
 #Verifica a versão
 session-manager-plugin --version
 ```
+
+### Sites para consulta
+- [Documentação Oficial AWS](https://docs.aws.amazon.com/)
+- [Documentação Oficial Docker](https://docs.docker.com/)
+- [Documentação Oficial Linux](https://www.kernel.org/doc/html/latest/)
+- [Documentação Oficial Git](https://git-scm.com/doc)
+- [Instance Vantage](https://instances.vantage.sh/)
