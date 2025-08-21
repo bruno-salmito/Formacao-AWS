@@ -12,10 +12,10 @@
 # Configurações iniciais
 #-------------------------------
 # Valor padrão do ECR_REGISTRY
-DEFAULT_ECR_REGISTRY="SEU_REGISTRY"
+DEFAULT_ECR_REGISTRY="874287870279.dkr.ecr.us-east-1.amazonaws.com"
 
 # Valor padrão do nome da imagem Docker
-DEFAULT_IMAGE_NAME="minha-imagem-docker"
+DEFAULT_IMAGE_NAME="prd/bia"
 
 # Valor padrão da região AWS
 AWS_REGION="us-east-1"

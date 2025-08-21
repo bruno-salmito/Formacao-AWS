@@ -35,7 +35,7 @@ Após finalizar a configuração da minha máquina virtual, instalei as ferramen
         * **Cluster:** Grupo de recursos computacionais (EC2 ou Fargate).
         * **Task Definition:** "Receita" que define como o container deve rodar.
         * **Task:** Instância em execução de uma task definition.
-        * **Service:** Garante que um número específico de task esteja rodando. 
+        * **Service:** Garante que um número específico de task esteja rodando, podemos comparar um service com um container. 
     * Tipos de launch
         * **EC2:** Você gerencia as instâncias.
         * **Fargate** Serverless, AWS gerencia a infraestrutura.
@@ -51,6 +51,17 @@ Após finalizar a configuração da minha máquina virtual, instalei as ferramen
 </p>
 
 - *Security Group* é um firewall virtual que controla o tráfego de entrada (*inbound*) e saída (*outbound*) de instâncias EC2, permitindo definir regras de segurança baseadas em IP, protocolo e porta.
+
+- *RDS* (Relational Database Service) é um serviço gerenciado de banco de dados relacional da AWS.
+    * Função Principal
+        * Facilita a configuração, operação e escalonamento de bancos de dados relacionais na nuvem
+        * Automatiza tarefas administrativas como backup, patches e atualizações
+    * Características
+        * **Engines suportadas:** MySQL, PostgreSQL, MariaDB, Oracle, SQL Server
+        * **Alta disponibilidade:** Suporte a Multi-AZ para redundância
+        * **Backup automático:** Snapshots diários e retenção configurável
+        * **Monitoramento:** Métricas integradas com CloudWatch
+        * **Segurança:** Criptografia em repouso e em trânsito
 
 ---
 
@@ -149,6 +160,31 @@ Resumo prático:
 
 ### 4️⃣ Trabalho com Imagens Docker e Publicação no ECR
 
+##### Criando Repositório ECR
+
+###### Via Console Web AWS:
+1. Acesse o Console AWS e navegue até o serviço ECR
+2. Clique em "Create repository" 
+3. Selecione "Private" como visibilidade
+4. Digite "prd/bia" como nome do repositório
+5. (Opcional) Adicione tags se desejar
+6. Clique em "Create repository"
+
+![Criando um repositório no ECR](./Assets/create-ecr-repo.png)
+
+#### Via AWS CLI:
+```bash
+# Criar repositório
+aws ecr create-repository \
+    --repository-name prd/bia \
+    --image-scanning-configuration scanOnPush=true \
+    --region us-east-1
+
+# Verificar se foi criado
+aws ecr describe-repositories --repository-names prd/bia
+``` 
+Você também pode utilizar os em [Scripts](./Scripts/).
+
 Criei e testei imagens Docker localmente, depois publiquei no Amazon Elastic Container Registry (ECR):
 
 ```bash
@@ -164,6 +200,8 @@ docker push <ID_AWS>.dkr.ecr.us-east-1.amazonaws.com/bia:latest
 ```
 Deixo um [Script](./Scripts/build.sh) que automatiza esse processo.
 
+![Script Build ECR](./Assets/script-ecr-send-bia.png)
+
 Conceito:
 
 - ECR é um repositório gerenciado de imagens Docker na AWS.
@@ -174,6 +212,53 @@ Conceito:
 aws ecr describe-repositories --profie formacao
 ```
 ![ECR-DESCRIBE](./Assets/ecr-describe.png)
+
+##### Criando RDS
+
+###### Via Console Web AWS:
+1. Acesse o Console AWS e navegue até o serviço RDS
+2. Clique em "Create database"
+3. Selecione o método "Standard create"
+4. Escolha o engine (MySQL, PostgreSQL etc)
+5. Selecione a versão do engine
+6. Escolha o template (Production, Dev/Test, Free tier)
+7. Configure:
+   - DB instance identifier
+   - Master username e password
+   - Instance size
+   - Storage type e size
+   - Multi-AZ deployment
+   - VPC e Security Group
+   - Public access
+   - Database authentication
+8. Clique em "Create database"
+
+![Criando o RDS para a Bia](./Assets/create-rds-postgress.png)
+
+###### Via AWS CLI:
+```bash
+# Criar RDS
+aws rds create-db-instance \
+    --db-instance-identifier bia \
+    --db-instance-class db.t3.micro \
+    --engine mysql \
+    --master-username postgress \
+    --master-user-password postgress \
+    --allocated-storage 20 \
+    --vpc-security-group-ids sg-bia-db \
+    --availability-zone us-east-1a \
+    --port 5432
+
+# Verificar status da criação
+aws rds describe-db-instances \
+    --db-instance-identifier bia
+
+# Obter endpoint de conexão
+aws rds describe-db-instances \
+    --db-instance-identifier bia \
+    --query 'DBInstances[0].Endpoint.Address' \
+    --output text
+```
 
 ### 5️⃣ Revisão de Conceitos Importantes
 
@@ -192,14 +277,7 @@ Durante o desafio, revisamos:
 
 Importante entender essa diferença, pois imagens Docker precisam ser compatíveis com a arquitetura da instância onde serão executadas.
 
-### Resultado Final
-
-Ao final do desafio:
-
-- VM configurada com AWS CLI e Session Manager Plugin.
-- Conexões realizadas via SSH e SSM.
-- Imagem Docker criada localmente e publicada no ECR.
-- Conceitos de rede, segurança e arquitetura revisados.
+<hr>
 
 ### 📚 Conceitos Abordados
 
@@ -252,6 +330,36 @@ sudo dpkg -i session-manager-plugin.deb
 #Verifica a versão
 session-manager-plugin --version
 ```
+<hr>
+
+### Resultado Final
+
+Ao final do desafio:
+
+- VM configurada com AWS CLI e Session Manager Plugin.
+- Conexões realizadas via SSH e SSM.
+- Imagem Docker criada localmente e publicada no ECR.
+- Conceitos de rede, segurança e arquitetura revisados.
+
+##### Arquitetura do Desafio-02
+
+![Arquitetura Desafio-02](./Assets/Arquitetura-Desafio-02.png)
+
+
+##### Security Groups e Aplicação Rodando.
+
+![Security Group bia-web](./Assets/sg-bia-web.png)
+![Security Group bia-db ](./Assets/sg-bia-db.png)
+
+
+##### Aplicação e SSM.
+
+![Bia Respondendo na EC2 bia-web porta 80](./Assets/bia-web-resp-80.png)
+
+![EC2 bia-web SSM](./Assets/conexao-ssm-bia-web.png)
+
+
+<hr>
 
 ### Sites para consulta
 - [Documentação Oficial AWS](https://docs.aws.amazon.com/)
