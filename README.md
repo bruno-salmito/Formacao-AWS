@@ -19,6 +19,9 @@ Neste desafio foi feita a instalação e configuração do ambiente local com Do
 Também foi realizado o **build** e teste de uma aplicação React chamada **Bia** localmente na porta 3001, além do provisionamento de uma instância EC2 na AWS com Security Group, Role IAM e acesso via SSM.
 
 ### [Desafio 02 - Preparação do ambiente e conexão com AWS via cli e publicação no ECR](Desafio-02/README.md)
+O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR. 
+
+### [Desafio 03 - Deploy da BIA no ECS + Assets no S3](Desafio-03/README.md)
 O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR.  
 
 ---
@@ -34,5 +37,7 @@ Formacao-AWS
  ├── README.md             # Visão geral do curso e índice de desafios
  ├── Desafio-01
  │    └── README.md         # Documentação completa do desafio 01
- └── Desafio-02
-      └── README.md         # Documentação completa do desafio 02
+ ├── Desafio-02
+ │    └── README.md         # Documentação completa do desafio 02
+ ├── Desafio-03
+      └── README.md         # Documentação completa do desafio 03
