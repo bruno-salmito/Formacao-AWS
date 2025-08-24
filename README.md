@@ -26,11 +26,18 @@ O objetivo deste desafio foi colocar a aplicação **BIA** rodando em um **Clust
 Além disso, construímos nossa primeira rotina de deploy utilizando **Shell Script**, garantindo a separação entre a entrega do frontend e backend do projeto.
 
 
+<<<<<<< HEAD
 ### [Desafio 04 - Automação com Shell Script + EC2 Porteiro + Túnel SSM](Desafio-04/README.md)
 Neste desafio, o foco foi criar **scripts em Shell Script** para automatizar o processo de lançar e gerenciar uma instância EC2 utilizada como “porteiro”.  
 A instância foi configurada para permitir o acesso seguro ao banco de dados RDS e à aplicação BIA via túneis SSM.
 
 <hr>
+=======
+### [Desafio 04 - Deploy da BIA no ECS + Assets no S3](Desafio-04/README.md)
+Neste desafio, o foco foi criar **scripts em Shell Script** para automatizar o processo de lançar e gerenciar uma instância EC2 utilizada como “porteiro”.  
+A instância foi configurada para permitir o acesso seguro ao banco de dados RDS e à aplicação BIA via túneis SSM.
+---
+>>>>>>> 3cc91f7710b9ba2ae9d47586d9829ebcca10bc0a
 
 
 
