@@ -27,8 +27,8 @@ Além disso, construímos nossa primeira rotina de deploy utilizando **Shell Scr
 
 
 ### [Desafio 04 - Deploy da BIA no ECS + Assets no S3](Desafio-04/README.md)
-O objetivo deste desafio foi colocar a aplicação **BIA** rodando em um **Cluster ECS (bia-web)**, com os **assets estáticos** sendo entregues a partir de um bucket S3 configurado como **site estático**.  
-Além disso, construímos nossa primeira rotina de deploy utilizando **Shell Script**, garantindo a separação entre a entrega do frontend e backend do projeto.
+Neste desafio, o foco foi criar **scripts em Shell Script** para automatizar o processo de lançar e gerenciar uma instância EC2 utilizada como “porteiro”.  
+A instância foi configurada para permitir o acesso seguro ao banco de dados RDS e à aplicação BIA via túneis SSM.
 ---
 
 
