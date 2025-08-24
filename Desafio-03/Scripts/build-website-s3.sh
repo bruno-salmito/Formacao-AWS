@@ -61,3 +61,14 @@ echo -e "${CYAN}iniciando o processo de sync com o S3..."
 echo -e "============================================================"
 echo -e "${RESET}"
 sync_to_s3
+
+# Incluir função para enviar pro ECR
+
+
+
+
+# Incluir registro no log do fim da operação
+log_message "Processo de build e sincronização com S3 finalizado"
+log_message "**********************************"
+echo -e "${GREEN}Processo finalizado com sucesso!${RESET}"
+echo -e "${GREEN}Verifique o arquivo de log para mais detalhes: ${LOG_FILE}${RESET}"    

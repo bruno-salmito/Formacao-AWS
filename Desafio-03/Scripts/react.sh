@@ -11,33 +11,37 @@
 function build_react {
 
     printf "Verificando o diretório da aplicação..."
+    log_message "Verificando o diretório da aplicação..."
     
     if [ -d "bia" ]; then
         echo -e "${GREEN}[OK]"
         cd bia/client
+        log_message "[OK] - Diretório da aplicação encontrado: ${PWD}"
     else
         echo -e "${RED}[ERRO]"
         echo "  Diretório da aplicação não encontrado!"
-        log_message "Diretório da aplicação não encontrado"
+        log_message "[ERRO] - Diretório da aplicação não encontrado"
         exit 1
     fi
 
     printf "Instalando dependências do React..."
+    log_message "Instalando dependências do React..."
 
     if npm install; then
         echo -e "${GREEN}[OK]"
         echo -e "   Dependências instaladas com sucesso!"
         echo -e "${RESET}"
-        log_message "Dependências instaladas com sucesso"
+        log_message "[OK] - Dependências instaladas com sucesso"
     else
         echo -e "${RED}[ERRO]"
         echo "   Falha ao instalar dependências do React!"
         echo -e "${RESET}"
-        log_message "Falha ao instalar dependências do React"
+        log_message "[ERRO] - Falha ao instalar dependências do React"
         exit 1
     fi
 
     printf "Construindo aplicação React..."
+    log_message "Construindo aplicação React..."
 
     VITE_API_URL="$1" npm run build --silent > /dev/null 2>&1
 
@@ -45,15 +49,18 @@ function build_react {
         echo -e "${GREEN}[OK]"
         echo -e "   Aplicação React construída com sucesso!"
         echo -e "${RESET}"
-        log_message "Aplicação React construída com sucesso: ${BUILD_PATH}"
+        log_message "[OK] - Aplicação React construída com sucesso: ${BUILD_PATH}"
         cd ../../
     else
         echo -e "${RED}[ERRO]"
         echo "   Falha ao construir a aplicação React!"
         echo -e "${RESET}"
-        log_message "Falha ao construir a aplicação React"
+        log_message "[ERRO] - Falha ao construir a aplicação React"
         exit 1
     fi
+
+    log_message "[Success] - Build do React finalizado com sucesso"
+    log_message "-------------------------------------"
     sleep 2
 }
 
@@ -100,7 +107,6 @@ function build_react2 {
         cd ../../
 
     fi
-    
     
 }
 
