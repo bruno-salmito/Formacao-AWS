@@ -26,8 +26,13 @@ log_start() {
     log_message "Usuário: $USER"
     log_message "Data: $TIMESTAMP"
     log_message "AWS Account: $AWS_ACCOUNT"
+    log_message "AWS Region: $AWS_REGION"
     log_message "Bucket PATH: $BUCKET_PATH"
     log_message "Bucket Name: $BUCKET_NAME"
+    log_message "Repository Name: $REPOSITORY_NAME"
+    log_message "Repository URL: $REPOSITORY_URL"
+    log_message "Image Name: $IMAGE_NAME"
+    log_message "Image Tag: $IMAGE_TAG"    
     log_message "********************************************"
 }
 
