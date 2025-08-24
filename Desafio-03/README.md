@@ -150,6 +150,20 @@ Essa separação traz benefícios como:
 
 <hr>
 
+### 5️⃣ Revisão de Conceitos Importantes
+
+Durante o desafio, revisamos os seguintes conceitos:
+
+- **Shell Script**: linguagem de script utilizada no Linux para automatizar tarefas. Muito usada em rotinas de deploy e administração de sistemas.  
+- **Amazon S3 (Static Website Hosting)**: serviço de armazenamento de objetos da AWS que pode ser configurado para hospedar sites estáticos, servindo arquivos HTML, CSS e JS diretamente da nuvem.  
+- **ECS (Elastic Container Service)**: serviço de orquestração de containers da AWS, responsável por gerenciar a execução de aplicações em containers.  
+- **Cluster ECS**: agrupamento lógico de recursos de computação (EC2 ou Fargate) onde os containers são executados.  
+- **Task Definition**: "receita" que define as especificações de um container (imagem, recursos, variáveis, portas, etc.).  
+- **Service**: garante que um número específico de tasks (instâncias de containers) esteja sempre em execução, garantindo alta disponibilidade.  
+- **ECR (Elastic Container Registry)**: serviço da AWS para armazenar, gerenciar e versionar imagens Docker, integrado de forma nativa ao ECS e EKS.  
+- **Separação Frontend/Backend**: prática arquitetural que consiste em manter o frontend (camada de apresentação) separado do backend (lógica de negócios e APIs), trazendo benefícios de escalabilidade, segurança e flexibilidade.
+
+<hr>
 ### 📚 Conceitos Abordados
 
 - Shell Script
