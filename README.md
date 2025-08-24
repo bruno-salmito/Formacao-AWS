@@ -22,7 +22,8 @@ Também foi realizado o **build** e teste de uma aplicação React chamada **Bia
 O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR. 
 
 ### [Desafio 03 - Deploy da BIA no ECS + Assets no S3](Desafio-03/README.md)
-O objetivo deste desafio foi configurar o acesso à AWS a partir do meu computador rodando Linux, testar diferentes formas de conexão com instâncias EC2 (SSH e SSM), trabalhar com imagens Docker e publicá-las no Amazon ECR.  
+O objetivo deste desafio foi colocar a aplicação **BIA** rodando em um **Cluster ECS (bia-web)**, com os **assets estáticos** sendo entregues a partir de um bucket S3 configurado como **site estático**.  
+Além disso, construímos nossa primeira rotina de deploy utilizando **Shell Script**, garantindo a separação entre a entrega do frontend e backend do projeto.
 
 ---
 
