@@ -45,10 +45,11 @@ function show_menu() {
     echo "2) Criar túnel para RDS (via instância bia-dev)"
     echo "3) Verificar status da instância EC2"
     echo "4) Parar instância EC2"
-    echo "5) Iniciar instância EC2"    
-    echo "6) Sair"
+    echo "5) Iniciar instância EC2"
+    echo "6) Criar instância EC2"    
+    echo "7) Sair"
     echo ""
-    echo -n "Digite sua opção [1-6]: "
+    echo -n "Digite sua opção [1-7]: "
 }
 
 # Função principal
@@ -105,8 +106,15 @@ function main() {
                 echo ""
                 echo -e "${CYAN}Pressione Enter para continuar...${RESET}"
                 read -r
-                ;;                      
+                ;;
             6)
+                echo ""
+                create_ec2
+                echo ""
+                echo -e "${CYAN}Pressione Enter para continuar...${RESET}"
+                read -r
+                ;;                         
+            7)
                 echo ""
                 echo -e "${GREEN}Saindo...${RESET}"
                 log_message "Script finalizado pelo usuário"
