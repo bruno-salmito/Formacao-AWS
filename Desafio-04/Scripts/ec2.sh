@@ -160,4 +160,96 @@ function start_stop_ec2() {
     
 }
 
+function create_ec2() {
+    echo -e "${CYAN}=== CRIANDO UMA INSTÂNCIA EC2 ===${RESET}"
+    echo ""
+    
+    echo -n "Digite o nome da instância EC2: "
+    read -r ec2_name
 
+    if [ -z "$ec2_name" ]; then
+        echo "Nome da instância não pode ser vazio."
+        return 1
+    fi
+
+    echo -n "Digite a região (padrão: $REGION):"
+    read -r AWS_REGION
+    region=${AWS_REGION:-$REGION}
+
+    echo -n "Digite o nome da VPC (padrão: Default):"
+    read -r VPC
+    vpc=${VPC:-Default}
+
+    printf  "Verificando se a VPC existe...."
+
+    vpc_id=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="$vpc" --query "Vpcs[0].VpcId" --output text)
+
+    if [ -z "$vpc_id" ] || [ "$vpc_id" == "None" ]; then
+        echo -e "${RED}[ERRO]${RESET}"
+        echo "      >VPC '$vpc' não encontrada."
+        return 1
+    fi
+    
+    echo -e "${GREEN}[OK]${RESET}"
+    echo -e "      >VPC '$vpc' encontrada ID: $vpc_id."
+
+    echo -n "Digite a subnet: (padrão: $DEFAULT_AZ):"
+    read -r SUBNET
+    subnet=${SUBNET:-$DEFAULT_AZ}
+
+    printf  "Verificando se a subnet existe...."
+
+    subnet_id=$(aws ec2 describe-subnets --filters Name=vpc-id,Values="$vpc_id" Name=availabilityZone,Values="$subnet" --query "Subnets[0].SubnetId" --output text)
+
+    if [ -z "$subnet_id" ] || [ "$subnet_id" == "None" ]; then
+        echo -e "${RED}[ERRO]${RESET}"
+        echo "      >Subnet '$subnet' não encontrada na VPC '$vpc'."
+        return 1
+    fi
+
+    echo -e "${GREEN}[OK]${RESET}"
+    echo -e "   >Subnet: $subnet id: $subnet_id"
+
+    echo -n "Digite o tipo de instância EC2 (padrão: t3.micro):"
+    read -r ec2_type
+    ec2_type=${ec2_type:-t3.micro}
+
+
+    echo -n "Digite o Security Group (padrão: bia-dev): "
+    read -r ec2_sg
+    ec2_sg=${ec2_sg:-bia-dev}
+
+    printf "Verificando se o Security Group existe...."
+    sg_id=$(aws ec2 describe-security-groups --group-names "bia-dev" --query "SecurityGroups[0].GroupId" --output text 2>/dev/null)
+
+    if [ -z "$sg_id" ]; then
+        echo -e "${RED}[ERRO]${RESET}"
+        echo "      >Security group '$ec2_sg' não encontrado."
+        return 1
+    fi
+
+    echo "${GREEN}[OK]${RESET}"
+
+    printf "Criando a instância EC2..."
+
+    aws ec2 run-instances \
+                --image-id "$AMI" --count 1 \
+                --instance-type "$ec2_type" \
+                --security-group-ids "$sg_id" --subnet-id "$subnet_id" --associate-public-ip-address \
+                --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":15,"VolumeType":"gp2"}}]' \
+                --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=\"$ec2_name\"}]" \
+                --iam-instance-profile Name=role-acesso-ssm --user-data file://UserData/user_data.sh
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK]${RESET}"    
+        echo "      >Instância EC2 '$ec2_name' criada com sucesso."
+        return 0
+    else
+        echo -e "${RED}[ERRO]${RESET}"
+        echo "      >Falha ao criar a instância EC2 '$ec2_name'."
+        return 1
+    fi
+    
+    
+
+}
