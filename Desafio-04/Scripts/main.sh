@@ -46,10 +46,11 @@ function show_menu() {
     echo "3) Verificar status da instância EC2"
     echo "4) Parar instância EC2"
     echo "5) Iniciar instância EC2"
-    echo "6) Criar instância EC2"    
-    echo "7) Sair"
+    echo "6) Criar instância EC2"
+    echo "7) Criar instância EC2 Por Subnet"    
+    echo "8) Sair"
     echo ""
-    echo -n "Digite sua opção [1-7]: "
+    echo -n "Digite sua opção [1-8]: "
 }
 
 # Função principal
@@ -115,6 +116,13 @@ function main() {
                 read -r
                 ;;                         
             7)
+                echo ""
+                create_ec2_new
+                echo ""
+                echo -e "${CYAN}Pressione Enter para continuar...${RESET}"
+                read -r
+                ;;   
+            8)
                 echo ""
                 echo -e "${GREEN}Saindo...${RESET}"
                 log_message "Script finalizado pelo usuário"
