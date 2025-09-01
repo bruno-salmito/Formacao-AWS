@@ -160,6 +160,7 @@ function start_stop_ec2() {
     
 }
 
+# Função para criar uma instância ec2
 function create_ec2() {
     echo -e "${CYAN}=== CRIANDO UMA INSTÂNCIA EC2 ===${RESET}"
     echo ""

@@ -180,6 +180,82 @@ function create_rds_tunnel() {
     fi
 }
 
+# Função para criar túnel entre bastion-host e instância de destino
+function create_bastion_tunnel() {
+    local bastion_name
+    local bastion_id
+    local target_host
+    local target_port
+    local local_port
+    
+    echo -e "${CYAN}=== TÚNEL via BASTION-HOST ===${RESET}"
+    echo ""
+    
+    # Solicita o bastion-host
+    echo -n "Digite o nome do bastion-host: "
+    read -r bastion_name
+    
+    if [ -z "$bastion_name" ]; then
+        echo -e "${RED}[ERRO] Nome do bastion-host não pode estar vazio${RESET}"
+        return 1
+    fi
+    
+    # Valida a instância bastion
+    bastion_id=$(validate_instance "$bastion_name")
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[ERRO] Bastion-host '$bastion_name' não disponível${RESET}"
+        log_message "Erro: Bastion-host '$bastion_name' não disponível"
+        return 1
+    fi
+    
+    # Solicita a instância/endpoint de destino
+    echo -n "Digite o endpoint/IP da instância de destino: "
+    read -r target_host
+    
+    if [ -z "$target_host" ]; then
+        echo -e "${RED}[ERRO] Instância de destino não pode estar vazia${RESET}"
+        return 1
+    fi
+    
+    # Solicita as portas
+    echo -n "Digite a porta local: "
+    read -r local_port
+    
+    if [ -z "$local_port" ]; then
+        echo -e "${RED}[ERRO] Porta local não pode estar vazia${RESET}"
+        return 1
+    fi
+    
+    echo -n "Digite a porta na instância de destino: "
+    read -r target_port
+    
+    if [ -z "$target_port" ]; then
+        echo -e "${RED}[ERRO] Porta de destino não pode estar vazia${RESET}"
+        return 1
+    fi
+    
+    # Cria o túnel
+    echo ""
+    echo -e "${YELLOW}Criando túnel via $bastion_name...${RESET}"
+    echo "Destino: $target_host:$target_port"
+    echo "Porta local: $local_port"
+    echo ""
+    
+    log_message "Iniciando túnel via bastion: $target_host:$target_port via $bastion_name ($bastion_id) - Local:$local_port"
+    
+    aws ssm start-session \
+        --target "$bastion_id" \
+        --document-name AWS-StartPortForwardingSessionToRemoteHost \
+        --parameters "{\"host\":[\"$target_host\"], \"portNumber\":[\"$target_port\"], \"localPortNumber\":[\"$local_port\"]}"
+    
+    if [ $? -eq 0 ]; then
+        log_message "Túnel via bastion criado com sucesso"
+    else
+        echo -e "${RED}[ERRO] Falha ao criar túnel via bastion${RESET}"
+        log_message "Erro ao criar túnel via bastion"
+    fi
+}
+
 
 
 # Verifica dependências do AWS CLI

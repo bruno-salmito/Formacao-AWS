@@ -47,7 +47,7 @@ function show_menu() {
     echo "4) Parar instância EC2"
     echo "5) Iniciar instância EC2"
     echo "6) Criar instância EC2"
-    echo "7) Criar instância EC2 Por Subnet"    
+    echo "7) Criar instância EC2 Por Subnet" 
     echo "8) Sair"
     echo ""
     echo -n "Digite sua opção [1-8]: "
@@ -127,6 +127,13 @@ function main() {
                 echo -e "${GREEN}Saindo...${RESET}"
                 log_message "Script finalizado pelo usuário"
                 exit 0
+                ;;
+            9)
+                echo ""
+                create_bastion_tunnel
+                echo ""
+                echo -e "${CYAN}Pressione Enter para continuar...${RESET}"
+                read -r
                 ;;
             *)
                 echo ""

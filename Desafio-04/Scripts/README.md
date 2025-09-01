@@ -53,8 +53,15 @@ Script para criação de túneis SSH para instâncias EC2 e RDS.
 
 **Funcionalidades:**
 - Validação de endpoints RDS
-- Criação de túneis SSH
+- Criação de túneis SSH diretos para EC2
+- Criação de túneis RDS via bastion-host
+- Criação de túneis genéricos via bastion-host para qualquer destino
 - Conexão segura com recursos AWS
+
+**Funções principais:**
+- `create_simple_tunnel()` - Túnel direto para EC2
+- `create_rds_tunnel()` - Túnel para RDS via bastion
+- `create_bastion_tunnel()` - Túnel genérico via bastion-host
 
 **Autor:** Bruno Salmito  
 **Versão:** 1.0
